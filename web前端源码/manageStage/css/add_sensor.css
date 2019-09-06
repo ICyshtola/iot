@@ -1,0 +1,138 @@
+body{
+	background-image: linear-gradient(120deg, #487eb0, #ffc15e);
+	background-repeat: no-repeat;
+}
+div {
+	display: block;
+}
+
+.position-relative {
+	position: relative!important;
+	top: 60px;
+	left: 0;
+	bottom: 60px;
+	color: #000000;
+	padding: 20px 50px;
+	background-color: rgba(255,255,255,.5);
+	width: 60%;
+	margin-left: 19%;
+}
+.sensor_top {
+	height: 60px;
+}
+
+.sensor_top h2{
+	font-family: SimSun;
+	font-size: 35px;
+}
+
+.position-front-hr{
+	height: 1px;
+	border: none;
+	border-top: 1px solid #ffffff;
+	
+}
+label{
+	font-family: "微软雅黑";
+	font-size: 19px;
+}
+.tip{
+	font-size: 16px;
+}
+.add_content{
+	width: 92%;
+	margin-left: 3%;
+	margin-top: 50px;
+}
+.sensor_name{
+	margin-top: 30px;
+	height:60px;
+	line-height: 60px;
+}
+.sensor_name input{
+	height:30px;
+	width:260px;
+	font-size: 17px;
+}
+.sensor_order,.sensor_minis{
+	margin-top: 30px;
+}
+.sensor_calculation{
+	height:80px;
+}
+.sensor_order div{
+	width: 90%;
+	height: 90px;
+}
+.sensor_order input{
+	height:30px;
+	width: 8%;
+	margin-top: 30px;
+	font-size: 17px;
+	text-align: center;
+}
+
+.add_item{
+	margin-left: 100px;
+	width: 32px;
+	height: 32px;
+	background: #ffc15e;
+	color: white;
+	outline: none;
+}
+.mini_sensor{
+	height: 40px;	
+	margin-top: 30px;
+}
+.mini_sensor label{
+	font-size: 16px;
+	margin-left: 4px;
+}
+.mini_sensor input{
+	width: 120px;
+	height: 28px;
+	font-size:16px
+	margin-left: 4px;
+}
+.mini_sensor button{
+	width: 28px;
+	height: 28px;
+	margin-left: 8px;
+	background: #ffc15e;
+	color: white;
+	outline: none;
+}
+.position-end-hr{
+	width:100%;
+	height: 1px;
+	border-top: 1px solid #ffffff;
+	margin-top: 30px;
+}
+.addsensor_submit{
+	margin-top: 60px;
+}
+.addsensor_submit button{
+	margin-left:40%;
+	width: 150px;
+	font-size: 22px;
+	padding: 5px;
+	background:#ffc15e;
+	border-radius: 5px;
+	color: white;
+	height: 40px;
+	margin-top: 30px;
+	opacity: 0.5;
+}
+.addsensor_submit button:hover{
+	opacity: 1;
+}
+.addsensor_submit button:focus{
+	outline: none;
+}
+input:focus{
+	outline:none;
+	border: 2px solid #ffc15e;
+}
+
+
+

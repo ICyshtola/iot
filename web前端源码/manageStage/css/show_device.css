@@ -1,0 +1,162 @@
+* {
+	box-sizing: border-box;
+}
+
+body {
+	background-image: linear-gradient(120deg, #487eb0, #ffc15e);
+	background-repeat: no-repeat;
+}
+
+div {
+	display: block;
+}
+
+li {
+	display: list-item;
+	text-align: -webkit-match-parent;
+}
+
+ul {
+	list-style-type: disc;
+	list-style: none;
+}
+
+.position-relative {
+	position: relative!important;
+	top: 0px;
+	left: 0;
+	margin: 0px 15%;
+	min-height: 570px;
+	padding: 20px 50px;
+	color: rgba(255, 255, 255, 0.9);
+}
+
+.device_top {
+	height: 80px;
+	font: 33px/100px "STHeiti";
+	letter-spacing: 0.07em;
+}
+
+#device_add {
+	float: right;
+	margin-top: 25px;
+	background: none;
+	border: none;
+	font-size: 50px;
+	position: relative;
+	color: rgba(255, 255, 255, 0.7);
+	outline: none;
+}
+
+#device_add:hover,
+#device_add:active {
+	color: rgba(255, 255, 255, 1);
+}
+
+.position-relative-hr {
+	margin: 0;
+	width: 100%;
+	border: none;
+	border-top: 2px solid rgba(255, 255, 255, 0.4);
+	margin-bottom: 15px;
+}
+.device-list ul {
+	margin: 0 auto;
+	padding: 0px;
+}
+
+.device-list ul li {
+	margin: 10px 0;
+	padding: 10px;
+	background-color: rgba(0, 0, 0, 0.35);
+	border-radius: 2px;
+}
+
+.device_item .device_item_name {
+	text-decoration: none;
+	color: rgba(255, 255, 255, 0.8);
+	font: 25px "微软雅黑";
+	letter-spacing: 0.03em;
+	margin: 0;
+	padding: 0;
+}
+
+.device_item .device_item_name:hover {
+	text-decoration: underline;
+	color: rgba(255, 255, 255, 1);
+}
+
+.device_item i {
+	float: right;
+	margin:20px 10px 0 10px;
+	color: rgba(255, 255, 255, .6);
+}
+.device_item i:hover{
+	color: rgba(255,255,255, 1);
+}
+.device_item .device_item_info{
+	font-size: 20px;
+}
+.device_item .device_item_delete{
+	font-size: 20px;
+}
+.device_item .device_item_set{
+	font-size: 20px;
+}
+.device_item .device_item_showData{
+	font-size: 17px;
+	margin-top: 22px;
+}
+.device_item .device_item_sence{
+	color: rgba(255, 255, 255, .5);
+	font-size: 14px;
+	max-height: 2em;
+	margin: 3px 0;
+	padding: 0;
+	overflow: hidden;
+	display: -webkit-box;
+	-webkit-line-clamp: 1;
+	-webkit-box-orient: vertical;
+}
+.device_item .device_item_sence:hover{
+	color: rgba(255, 255, 255, 1);
+}
+
+
+#testOrder{
+	margin-left: 50px;	
+	margin-top: 30px;
+}
+.sensor_order div{
+	width: 90%;
+	height: 90px;
+}
+#testOrder label{
+	font-family: "微软雅黑";
+	font-size: 19px;
+}
+.sensor_order input{
+	height:34px;
+	width: 56px;
+	margin-top: 30px;
+	font-size: 17px;
+	text-align: center;
+}
+.submit_order button{
+	width: 130px;
+	height: 34px;
+	background:#009F95;
+	color: white;
+	font-size: 20px;
+}
+
+.return_data{
+	margin-top: 20px;
+	height: 40px;
+}
+#tips{
+	height:30px;
+	width: 400px;
+	font-size: 17px;
+	color: red;
+}

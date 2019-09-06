@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" href="css/settings.css" />
+		<script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
+		<script type="text/javascript" src="js/base.js"></script>
+		<script type="text/javascript">
+			window.onload = function() {
+				var info = {};
+				var token = getCookie("token");
+				var email = getCookie("current_email");
+				info['token'] = token;
+				info['email'] = email;
+				var userinfo = {};
+				jQuery.ajax({
+					async: false,
+					type: "POST",
+					url: "http://192.168.100.32:8036/user/getUserInfo",
+					data: info,
+					dataType: "text",
+					xhrFields: {
+						withCredentials: true
+					},
+					success: function(data) {
+						var result = JSON.parse(data);
+						if(result.message == "success") {
+							userinfo = JSON.parse(result.content);
+						} else if(result.message == "tokenError") {
+							alert("获取数据失败:token错误");
+						}
+						setCookie("token", result.token, 100);
+					}
+				})
+				/*上方用户名片设置--头像显示*/
+				var user_img = document.getElementsByClassName("userimg")[0];
+				user_img.src = userinfo.userAvatar;
+				/*上方用户名片设置--用户名显示*/
+				var user_name = document.getElementsByClassName("username")[0];
+				user_name.innerText = userinfo.userName;
+
+				/*左边导航栏*/
+				var user_info = document.querySelectorAll(".usernav li")[0];
+				var change_passwd = document.querySelectorAll(".usernav li")[1];
+				var update_email = document.querySelectorAll(".usernav li")[2];
+
+				/*基本信息*/
+				var content = document.querySelector(".right_content");
+				var iframe = content.getElementsByTagName("iframe")[0];
+
+				var path = "setting_userinfo.html" + "?userName=" + userinfo.userName + "&userEmail=" + userinfo.userEmail + "&userRegistertime=" + userinfo.userRegistertime;
+				iframe.setAttribute('src', path);
+				user_info.onclick = function() {
+					var path = "setting_userinfo.html" + "?userName=" + userinfo.userName + "&userEmail=" + userinfo.userEmail + "&userRegistertime=" + userinfo.userRegistertime;
+					iframe.setAttribute('src', path);
+				}
+
+				/*修改密码*/
+				change_passwd.onclick = function() {
+					iframe.setAttribute('src', "setting_changepasswd.html");
+				}
+
+				/*更新邮箱*/
+				update_email.onclick = function() {
+					iframe.setAttribute('src', "setting_updatemail.html");
+				}
+
+				/*从本地获取图片，修改头像的src值*/
+				document.getElementById("file").onchange = function() {
+					var docObj = this;
+
+					var changeimginfo = new FormData();
+					changeimginfo.append('token', getCookie("token"));
+					changeimginfo.append('email', getCookie("current_email"));
+					changeimginfo.append('file', docObj.files[0]);
+
+					jQuery.ajax({
+						type: "POST",
+						url: "http://192.168.100.32:8036/user/changeAvatar",
+						processData: false, //不处理参数,图片，不加这一行会出现illegal错误
+						contentType: false, //不加这一行会报400错误
+						data: changeimginfo,
+						dataType: "text",
+						xhrFields: {
+							withCredentials: true
+						},
+						success: function(data) {
+							var result = JSON.parse(data);
+							if(result.content == "success") {
+								alert("更改图片成功");
+								user_img.src = window.URL.createObjectURL(docObj.files[0]);
+								parent.document.getElementById("nav_userimage").src = user_img.src;
+							} else if(result.content == "big") {
+								alert("更改图片失败：图像过大");
+							} else if(result.content == "empty") {
+								alert("更改图片失败：图像为空");
+							} else if(result.content == "tokenError") {
+								alert("更改图片失败：token错误");
+							}
+							setCookie("token", result.token, 100);
+						}
+
+					})
+
+				}
+			}
+		</script>
+		<title></title>
+	</head>
+
+	<body>
+		<div class="head_info">
+			<div class="design_label">
+			</div>
+			<div class="head_content">
+				<img class="userimg" />
+				<label class="username">用户名</label>
+				<a class="change_img">更换头像</a>
+				<input type="file" text="更改头像" id="file" accept="image/png, image/jpeg, image/gif, image/jpg" multiple/>
+				</a>
+			</div>
+		</div>
+		<div class="left_nav">
+			<ul class="usernav">
+				<li>
+					<a href="##">个人信息</a>
+				</li>
+				<li>
+					<a href="##">密码修改</a>
+				</li>
+				<li>
+					<a href="##">更新邮箱</a>
+				</li>
+			</ul>
+		</div>
+		<div class="right_content">
+			<iframe></iframe>
+		</div>
+
+	</body>
+
+</html>

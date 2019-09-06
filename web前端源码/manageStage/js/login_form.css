@@ -1,0 +1,164 @@
+/* csshint-disable */
+html,
+body{
+	background-image: linear-gradient(120deg, #487eb0, #ffc15e);
+	background-repeat: no-repeat;
+}
+.main {
+	height: 600px;
+}
+#root {
+	width: 920px;
+	height: 420px;
+	position: relative;
+	top: 160px;
+	margin: 0 auto;
+	overflow: hidden;
+	background: #fff;
+	box-shadow: 0 4px 5px 0 rgba(0,0,0,0.09);
+    border: 2px solid #ebeff7; 
+}
+#root .layout {
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+#root table{
+}
+#brand {
+    vertical-align: middle;
+    text-align: center;
+    width: 500px;
+    height: 420px;
+    border-right: 2px solid #ececec;
+}
+.login-box {
+    z-index: 2000;
+    font-size: 14px;
+    background: #fff;
+    width: 420px;
+    height: 420px;
+    position: relative;
+    overflow: hidden;
+}
+.login-box .login-form {
+	width: 380px;
+	box-shadow: none;
+	margin: 0 auto;
+}
+
+.login-form #login-top {
+	margin-top: 20px;
+	margin-bottom: 20px;
+	text-align: center;
+	float: top;
+}
+.login-form #login-top button {
+	border: none;
+	background-color: #fff;
+	font: 26px "微软雅黑";
+	color: #666;
+	width: 100%;
+    height: 42px;
+}
+#login-top > div {
+    position: static;
+}
+.login-form .login-form-item {
+    margin: 20px 0;
+    position: relative;
+}
+.login-form .login-form-item .login-form-content a{
+	margin-right: 10px;
+    float: right;
+}
+.login-form input::-webkit-input-placeholder { 
+    color: #999;
+}
+.login-form input[type="email"],
+.login-form input[type="password"]{
+    height: 38px;
+    width: 360px;
+    padding-left: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+}
+.login-form input[type="text"]{
+	height: 38px;
+    width: 200px;
+    padding-left: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+}
+.login-form input:focus {
+    border-color: #288aed;
+    outline: none;
+}
+
+.login-form #login-form-error {
+    color: 	#EE3B3B;
+}
+.login-form .login-form-item-error{
+	height: 20px;
+}
+.login-form .login-form-email-verifyCode input{
+	width: 215px;
+}
+.login-form .btn-light {
+    color: skyblue;
+    background-color: #e8f5fd;
+    width: 130px;
+    height: 41px;
+    border: none;
+    font-size: 14px;
+    margin-left: 10px;
+}
+.login-form .btn-light[disabled] {
+    background-color: #ccc;
+    color: #fff;
+}
+.login-form .submit {
+    width: 372px;
+    height: 42px;
+    color: #fff;
+    background-color: #1C86EE;
+    border: none;
+    font-size: 16px;
+}
+.login-form .submit:hover{
+    width: 376px;
+    height: 42px;
+    color: #fff;
+    background-color: #1874CD;
+    border: none;
+    font-size: 18px;
+}
+.login-form .submit[disabled] {
+    background-color: #ccc;
+    color: #fff;
+    cursor: not-allowed;
+}
+#codebtn{
+	margin-left: 15px;
+	width: 140px;
+    height: 42px;
+    color: #fff;
+    background-color: #1C86EE;
+    border: none;
+    font-size: 16px;
+}
+#codebtn:hover{
+    background-color: #1874CD;
+    border: none;
+}
+#codebtn:[disabled]{
+	background-color: #ccc;
+    color: #fff;
+    cursor: not-allowed;
+}
+#submitbtn{
+	margin-top: 10px;
+}
+.login-form #login-bottom {
+	margin-right: 10px;
+	float: right;
+}

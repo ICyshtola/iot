@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" href="css/add_sensor.css" />
+		<script type="text/javascript" src="js/jquery-1.8.2.min.js" ></script>
+		<script src="js/layer-v3.1.1/layer/layer.js"></script>
+		<script type="text/javascript" src="js/base.js" ></script>
+		<script type="text/javascript" src="js/add_sensor.js" ></script>
+		<title></title>
+	</head>
+	<body>
+		<div class="position-relative">
+			<div class="sensor_top">
+				<h2>添加传感器<h2>
+			</div>
+			<hr class="position-front-hr" />
+			<div class="add_content">
+				<div class="sensor_name">
+					<label>请输入传感器名称（该名称不可重复）：</label>
+					<input type="text"/>
+				</div>
+				<div class="sensor_order">
+					<label>请输入传感器命令：</label>
+					<label class="tip">(请注意不要与已有传感器地址冲突。若冲突，可至“设备管理/开发板管理”进行调试并设置传感器地址)</label>
+					<div class="input_items">
+						<input type="text" maxlength="2"/>--
+						<input type="text" maxlength="2"/>--
+						<input type="text" maxlength="2"/>--
+						<input type="text" maxlength="2"/>--
+						<input type="text" maxlength="2"/>--
+						<input type="text" maxlength="2"/>--
+						<input type="text" maxlength="2"/>--
+						<input type="text" maxlength="2"/>
+					</div>
+				</div>
+			
+				<div class="sensor_minis">
+					<label>请输入内置传感器</label>
+					<label class="tip">(计算方式：未知数为x；传感器名不能相同)：</label>
+					<button type="button" class="add_item">+</button>
+					<div class="mini_sensor">
+						<label>传感器名称：</label><input type="text"/>
+						<label>传感器单位：</label><input type="text"/>
+						<label>计算方式：</label><input type="text"/>
+						
+						<button type="button" class="delete_item">-</button>
+					</div>
+				</div>
+			</div>
+			<div class="addsensor_submit">
+				<hr class="position-end-hr" />	
+				<button type="button" id="add_submit">添加</button>
+			</div>
+		</div>
+
+	</body>
+</html>

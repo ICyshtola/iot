@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>通用农业物联网-注册</title>
+		<link rel="stylesheet" href="css/reg_form.css" />
+		<link rel="stylesheet" href="css/base.css" />
+		<script type="text/javascript" src="js/jquery-1.8.2.min.js" ></script>
+		<script type="text/javascript" src="js/md5.js" charset="utf-8"></script>
+	</head>
+	<body>
+		<div class="main">
+			<header>
+				<div class="container">
+					<a href="">
+						<img height="50" class="logo" src="./img/logo.png"/>
+					</a>
+					<div class="right">
+						<a href="index.html">返回首页</a>
+					</div>
+				</div>
+			</header>
+			<div class="brand">
+				<h2>欢迎注册通用农业物联网账号</h2>
+				<h3>准备开启您的农业物联管理之旅</h3>
+			</div>
+			<div id="root">
+				<div class="reg-app">
+					<div class="reg-form">
+						<p class="login-tip">
+							已有账号？
+							<a href="login.html">立即登录</a>
+						</p>
+						<form class="san-form">
+							<div class="san-form-item san-form-item-userName">
+								<div class="san-form-item-content">
+									<input placeholder="用户名" type="text">
+								</div>
+							</div>
+							<div class="san-form-item san-form-item-password">
+								<div class="san-form-item-content">
+									<input placeholder="密码" type="password">
+									<label>密码长度要在8-16之间</label>	
+								</div>
+							</div>
+							<div class="san-form-item san-form-item-confirmPassword">
+								<div class="san-form-item-content">
+									<input placeholder="确认密码" type="password">
+									<label>两次密码不一致</label>
+								</div>
+							</div>
+							<div class="san-form-item san-form-item-email">
+								<div class="san-form-item-content">
+									<input placeholder="邮箱" type="email" name="email">
+									<label>邮箱格式不正确</label>
+								</div>
+							</div>
+							<div class="san-form-item san-form-item-verifyCode">
+								<div class="san-form-item-content">
+									<input maxlength="6" placeholder="邮箱验证码" name="vercode" >
+									<button type="button" disabled class="btn-light">获取验证码</button>
+								</div>
+							</div>
+							<div class="san-form-item">
+								<div class="san-form-item-content">
+									<label style="color: rgb(102,102,102);">
+										<input type="checkbox">我已阅读并接受以下条款 :
+									</label>
+								</div>
+							</div>
+							<div class="argeements">
+								<a href="" target="_blank">《隐私权保护声明》</a>
+							</div>
+							<div class="san-form-item">
+								<div class="san-form-item-content">
+									<button type="button" class="submit" disabled>注册</button>
+								</div>
+							</div>
+						</form>
+					
+						<div class="argeements"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript">
+			var flag = new Array(0, 0, 0, 0, 0, 0);
+			var contentlist = document.getElementsByClassName("san-form-item-content");
+			
+			var time = 59;
+			var t_interval;
+			/**
+			 * 用于定时
+			 */
+			function myclock() {
+				emailbtn.disabled=true;
+				if(time > 0){
+					emailbtn.innerText = time;
+					time--;
+				}
+				else if(time == 0){
+					emailbtn.disabled=false;
+					emailbtn.innerText="获取验证码";
+					window.clearInterval(t_interval);
+					time = 59;
+				}
+			}
+			function OnOffButton(flag1, flag2, flag3, flag4, flag5) {
+				var emailbtn = contentlist[4].getElementsByTagName("button")[0];
+				if(flag1 == 1 && flag2 == 1 && flag3 == 1 && flag4 == 1) {
+					emailbtn.disabled = false;
+				} else {
+					emailbtn.disabled = true;
+				}
+				var submitbtn = contentlist[6].getElementsByTagName("button")[0];
+				if(flag1 == 1 && flag2 == 1 && flag3 == 1 && flag4 == 1 && flag5 == 1) {
+					submitbtn.disabled = false;
+				} else {
+					submitbtn.disabled = true;
+				}
+			
+			}
+			var username = contentlist[0].getElementsByTagName("input")[0];
+			username.onchange = function() {
+				if(username.value.length > 0) {
+					flag[0] = 1;
+				} else {
+					flag[0] = 0;
+				}
+			}
+			
+			var psword = contentlist[1].getElementsByTagName("input")[0];
+			
+			psword.onchange = function() {
+				var parr = psword.parentNode;
+				var info = parr.getElementsByTagName("label")[0];
+				if(psword.value.length >= 8 && psword.value.length <= 16) {
+					info.style.visibility = "hidden";
+					flag[1] = 1;
+					OnOffButton(flag[0], flag[1], flag[2], flag[3], flag[4]);
+				} else {
+					info.style.visibility = "visible";
+					flag[1] = 0;
+					OnOffButton(flag[0], flag[1], flag[2], flag[3], flag[4]);
+				}
+			}
+			
+			var psword2 = contentlist[2].getElementsByTagName("input")[0];
+			psword2.onchange = function() {
+				var parr = psword2.parentNode;
+				var info = parr.getElementsByTagName("label")[0];
+				if(psword2.value == psword.value) {
+					info.style.visibility = "hidden";
+					flag[2] = 1;
+					console.log(flag[2]);
+					OnOffButton(flag[0], flag[1], flag[2], flag[3], flag[4]);
+				} else {
+					info.style.visibility = "visible";
+					flag[2] = 0;
+					console.log(flag[2]);
+					OnOffButton(flag[0], flag[1], flag[2], flag[3], flag[4]);
+				}
+			}
+			var email = contentlist[3].getElementsByTagName("input")[0];
+			email.onchange = function() {
+				var parr = email.parentNode;
+				var info = parr.getElementsByTagName("label")[0];
+			
+				var reg = /^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/;
+			
+				if(reg.test(email.value)) {
+					info.style.visibility = "hidden";
+					flag[3] = 1;
+					OnOffButton(flag[0], flag[1], flag[2], flag[3], flag[4]);
+				} else {
+					info.style.visibility = "visible";
+					flag[3] = 0;
+					OnOffButton(flag[0], flag[1], flag[2], flag[3], flag[4]);
+			
+				}
+			}
+		
+			var emailbtn = contentlist[4].getElementsByTagName("button")[0];
+			emailbtn.onclick = function() {
+				emailbtn.disabled=true;
+				var info = {};
+				info['email'] = email.value;
+				info['type'] = "register";
+				jQuery.ajax({
+					type: "POST",
+					url: "http://192.168.100.32:8036/quest/code",
+					xhrFields: {
+						withCredentials: true
+					},
+					data: info
+				});
+				alert("已发送至邮箱，请注意查收！");
+				t_interval = window.setInterval("myclock()",1000);
+			}
+		
+			var vercode = contentlist[4].getElementsByTagName("input")[0];
+			vercode.onchange = function() {
+				if(vercode.value.length == 6) {
+					flag[4] = 1;
+					OnOffButton(flag[0], flag[1], flag[2], flag[3], flag[4]);
+				} else {
+					flag[4] = 0;
+					OnOffButton(flag[0], flag[1], flag[2], flag[3], flag[4]);
+				}
+			
+			}
+			var submitbtn = contentlist[6].getElementsByTagName("button")[0];
+			submitbtn.onclick = function() {
+				var hash = MD5.createMD5String(psword.value);
+				
+				var info = {};
+				info['name'] = username.value;
+				info['password'] = hash;
+				info['avatar'] = "https://is1-ssl.mzstatic.com/image/thumb/Purple123/v4/d7/dd/a5/d7dda57c-2d4f-c387-f482-3b4f4c633cfa/AppIcon-0-1x_U007emarketing-0-0-85-220-0-7.png/246x0w.jpg";
+				info['email'] = email.value;
+				info['code'] = vercode.value;
+				info['type'] = "register";
+				jQuery.ajax({
+					type: "POST",
+					url: "http://192.168.100.32:8036/user/register",
+					data: info,
+					dataType: "text",
+					xhrFields: {
+						withCredentials: true
+					},
+					success: function(data) {
+						var result = JSON.parse(data);
+						if(result.content == "success")
+						{
+							alert("注册成功");
+							window.location.href = "login.html";
+							
+						}
+						else if(result.content == "codeError")
+						{
+							alert("验证码错误");
+						}
+						else if(result.content == "repeat")
+						{
+							alert("邮箱已被注册");
+						}
+					},
+					error: function() {
+						console.log("error");
+					}
+				})
+			
+			}
+		</script>
+		<footer>
+			"2019-6-27"
+			<a href="" target="_blank">使用必读</a>
+		</footer>
+	</body>
+</html>

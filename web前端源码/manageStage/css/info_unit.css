@@ -1,0 +1,228 @@
+* {
+	box-sizing: border-box;
+}
+
+body {
+	background-image: linear-gradient(120deg, #487eb0, #ffc15e);
+	background-repeat: no-repeat;
+}
+
+div {
+	display: block;
+}
+
+input,
+textarea {
+	outline: none;
+	border: none;
+	background: white;
+}
+
+.position-relative {
+	position: relative!important;
+	top: 60px;
+	left: 0;
+	bottom: 60px;
+	margin: 0px 8%;
+	min-height: 480px;
+	padding: 20px 50px;
+	color: rgba(255, 255, 255, 1);
+	background-color: rgba(0, 0, 0, 0.4);
+	/*filter: progid:DXImageTransform.Microsoft.Shadow(color=#909090, direction=120, strength=4);
+	-moz-box-shadow: 2px 2px 10px ;
+	-webkit-box-shadow: 2px 2px 10px#909090; 
+	box-shadow: 2px 2px 10px #909090;
+	background-color: #909090;*/
+}
+
+.unit_top {
+	margin: 0px;
+	height: 70px;
+}
+
+.unit_top #unit_name {
+	font: 40px "微软雅黑";
+	margin: 0;
+	padding: 0;
+	color: white;
+	opacity: 1;
+	/*color: #006400;*/
+	/*对谷歌无效*/
+	-webkit-text-fill-color: white;
+	/*输入文字、placeholder颜色*/
+}
+
+.position-relative-hr {
+	height: 2px;
+	border: none;
+	border-top: 2px solid #fff;
+	margin-top: 5px;
+}
+
+.unit_info .unit_info_content {
+	padding: 10px 0px;
+	margin-bottom: 10px;
+	background-color: rgba(255, 255, 255, 0.2);
+}
+
+.unit_info .unit_info_key {
+	background-color: #ffc15e;
+	color: white;
+	padding: 3px 6px;
+	border: 2px solid #FFC15E;
+	font: 16px arial;
+	font-weight: 600;
+	margin-left: -2px;
+}
+
+.unit_info_list .unit_info_item {
+	margin: 20px 20px 5px 20px;
+	border: none;
+}
+
+.unit_info_item label {
+	font: 18px "微软雅黑";
+}
+
+.unit_info_item input {
+	font: 16px "微软雅黑";
+	width: 50px;
+	height: 30px;
+	margin-top: 3px;
+	color: black;
+	background-color: rgba(255, 255, 255, 1);
+	text-align: center;
+}
+
+.unit_info_item input:focus {
+	width: 50px;
+	border-color: #ffc15e;
+}
+
+.unit_info_item input:disabled {
+	width: 50px;
+	font: 16px "微软雅黑";
+	height: 30px;
+	margin-top: 3px;
+	color: white;
+	background: transparent;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+	-webkit-appearance: none !important;
+}
+.unit_info_item textarea {
+	font: 16px "微软雅黑";
+	width: 100%;
+	min-height: 2em;
+	margin-top: 10px;
+	padding-top: 4px;
+	text-indent: 2em;
+	overflow: auto;
+	color: black;
+	background-color: rgba(255, 255, 255, 1);
+	vertical-align: top;
+	resize: vertical;
+}
+
+.unit_info_item textarea:focus {
+	border-color: #ffc15e;
+}
+
+.unit_info_item textarea:disabled {
+	font: 16px "微软雅黑";
+	width: 100%;
+	min-height: 2em;
+	margin-top: 10px;
+	padding-top: 4px;
+	text-indent: 2em;
+	overflow: auto;
+	vertical-align: top;
+	resize: vertical;
+	color: white;
+	background: transparent;
+}
+
+.unit_info_item .unit_info_item_error {
+	margin-left: 30px;
+	color: rgb(255, 0, 0);
+	font-size: 10px;
+}
+
+.unit_device_list ul {
+	margin-top: 20px;
+	padding: 0px;
+	list-style: none;
+}
+
+.unit_device_list ul li {
+	background-color: rgba(0, 0, 0, 0.3);
+	/*border: 1px solid #909090;*/
+	border-radius: 3px;
+	margin: 7px 20px;
+	padding: 20px;
+	/*box-shadow: 2px 2px 4px #2E2D3C;*/
+}
+
+.device_item .device_item_name {
+	text-decoration: none;
+	color: rgba(255, 255, 255, 0.9);
+	font: 25px "微软雅黑";
+}
+
+.device_item .device_item_name:hover {
+	text-decoration: underline;
+	color: rgba(255, 255, 255, 1);
+}
+
+.device_item i {
+	float: right;
+	margin: 10px 20px 0 10px;
+	color: rgba(255, 255, 255, .8);
+}
+
+.device_item i:hover {
+	color: rgba(255, 255, 255, 1);
+}
+
+.device_item .device_item_info {
+	font-size: 20px;
+}
+
+.device_item .device_item_delete {
+	font-size: 20px;
+}
+
+.device_item .device_item_showData {
+	font-size: 17px;
+	margin-top: 11px;
+}
+
+.device_item div {
+	margin: 0;
+	padding: 0;
+	background-color: antiquewhite;
+}
+
+.position-relative button {
+	float: right;
+	margin-right: 10px;
+	padding: 0.25em 0.5em;
+	border: 1px solid #FFC15E;
+	background-color: #ffc15e;
+	opacity: 0.9;
+	color: white;
+	outline: none;
+}
+
+.position-relative button:hover {
+	opacity: 1;
+}
+
+.position-relative button:active {
+	opacity: 1;
+}
+
+.position-relative button:disabled {
+	opacity: 0.5;
+}

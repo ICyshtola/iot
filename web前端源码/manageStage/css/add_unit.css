@@ -1,0 +1,111 @@
+body{
+	vertical-align: middle;
+	background-image: linear-gradient(120deg, #487eb0, #ffc15e);
+	background-repeat: no-repeat;
+}
+.main {
+	top: 60px;
+	left: 0;
+	margin: 0 19%;
+	margin-bottom: 60px;
+	position: relative;
+	padding: 20px 50px;
+	background-color: rgba(255,255,255,.5);
+}
+.new-unit-form h2{
+	font: 35px "SimSun";
+}
+
+.new-unit-form > hr {
+	margin: 0px;
+	width: 100%;
+	border: none;
+	border-top: 2px solid rgb(255, 255, 255);
+	margin-bottom: 45px;
+}
+
+.new-unit-fields label {
+	margin: 0px 0px 0px 20px;
+	letter-spacing: 0.03em;
+	font-size: 19px;
+}
+
+.new-unit-fields div {
+	padding: 10px 0px;
+	margin-bottom: 20px;
+}
+
+.new-unit-fields input {
+	height: 30px;
+	padding-left: 10px;
+	font-size: 17px;
+	border: 1px solid #ccc;
+	outline: none;
+}
+
+.new-unit-fields input:focus {
+	border: 1px solid #ffc15e;
+	outline: none;
+}
+
+.new-unit-fields input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+}
+
+.new-unit-fields input[type="number"] {
+	-moz-appearance: textfield;
+}
+
+.new-unit-fields input[type="text"] {
+	width: 50%;
+	margin-right: 20px;
+}
+
+.new-unit-fields input[type="number"] {
+	width: 30px;
+}
+
+.new-unit-fields textarea {
+	margin: 20px 20px 20px;
+	height: 100px;
+	width: 94%;
+	font-size: 14px;
+	border: 1px solid #ccc;
+	resize:vertical;
+}
+.new-unit-fields textarea:focus {
+	border-color: #ffc15e;
+	outline: none;
+}
+.new-unit-fields > hr {
+	margin: 0px;
+	width: 100%;
+	border: none;
+	border-top: 2px solid rgb(255, 255, 255);
+	margin-bottom: 15px;
+}
+.new-unit-fields button {
+	margin-left:40%;
+	width: 150px;
+	font-size: 22px;
+	padding: 5px;
+	background-color:#ffc15e;
+	border-radius: 5px;
+	color: white;
+	height: 40px;
+	margin-top: 30px;
+	opacity: 0.5;
+}
+.new-unit-fields button:hover {
+	opacity: 1;
+}
+
+.new-unit-fields button:disabled {
+	opacity: 0.5;
+}
+.new-unit-fields .unit-item-error{
+	color: rgba(255, 0, 0, 0.6);
+	margin-right: 20px;
+	float: right;
+}

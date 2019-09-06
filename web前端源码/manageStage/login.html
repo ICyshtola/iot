@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>通用农业物联网-登录</title>
+	<link rel="stylesheet" href="css/login_form.css" />
+	<link rel="stylesheet" href="css/base.css" />
+	<script type="text/javascript" src="js/md5.js"></script>
+	<script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
+	<script type="text/javascript" src="js/base.js"></script>
+	<script type="text/javascript" src="js/login.js"></script>
+</head>
+
+<body>
+	<div class="main">
+		<header>
+			<div class="container">
+				<a href="index.html">
+					<img height="50" class="logo" src="./img/logo.png" />
+				</a>
+				<div class="right">
+					<a href="index.html">返回首页</a>
+				</div>
+			</div>
+		</header>
+		<div id="root">
+			<table cellpadding="0" cellspacing="0">
+				<tbody>
+					<tr>
+						<td id="brand">
+							<a href="index.html">
+								<img width="450" src="./img/logo&signal.png" />
+							</a>
+						</td>
+						<td>
+							<div id="login" class="login-box">
+								<div class="login-form">
+									<div id="login-top">
+										<button id="login-email" disabled>邮箱登录</button>
+									</div>
+									<form id="login-form-email">
+										<div class="login-form-item login-form-item-error">
+											<div class="login-form-content">
+												<p id="login-form-error"></p>
+											</div>
+										</div>
+										<div class="login-form-item login-form-item-email">
+											<div class="login-form-content">
+												<input type="email" placeholder="邮箱" />
+											</div>
+										</div>
+										<div class="login-form-item login-form-item-password">
+											<div class="login-form-content">
+												<input type="password" placeholder="密码" />
+											</div>
+										</div>
+										<div class="login-form-item">
+											<div class="login-form-content">
+												<label style="color: rgb(102,102,102);">
+													<input id="login-form-item-remember" type="checkbox">记住我
+												</label>
+												<a href="forget_passwd.html">忘记密码</a>
+											</div>
+										</div>
+										<div class="login-form-item">
+											<div class="login-form-content">
+												<button type="button" class="submit" disabled>登录</button>
+											</div>
+										</div>
+									</form>
+									<div id="login-bottom">
+										<a href="register.html">立即注册</a>
+									</div>
+								</div>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<footer>
+		"2019-6-27"
+		<a href="" target="_blank">使用必读</a>
+	</footer>
+</body>
+
+</html>

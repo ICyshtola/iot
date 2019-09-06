@@ -1,0 +1,117 @@
+* {
+	box-sizing: border-box;
+}
+body {
+	background-image: linear-gradient(120deg, #487eb0, #ffc15e);
+	background-repeat: no-repeat;
+	color: white;
+}
+div {
+	display: block;
+}
+
+.position-relative {
+	position: relative!important;
+	/*top: 60px;*/
+	top:0;
+	left: 0;
+	bottom: 10px;
+	margin: 0px 8%;
+	min-height: 480px;
+	color: rgba(255, 255, 255, 0.9);
+	padding: 20px 50px;
+	min-height: 500px;
+}
+
+.sensor_top {
+	height: 80px;
+	font-size: 35px;
+	letter-spacing: 0.07em;
+}
+
+.sensor_top label {
+	font: 30px/100px "微软雅黑";
+	margin-top: 30px;
+}
+#sensor_add {
+	float: right;
+	margin-top: 25px;
+	background: none;
+	border: none;
+	font-size: 50px;
+	position: relative;
+	color: rgba(255, 255, 255, 0.7);
+	outline: none;
+}
+
+#sensor_add:hover,
+#sensor_add:active {
+	color:rgba(255, 255, 255, 1);
+}
+.position-relative-hr {
+	height: 2px;
+	border: none;
+	border-top: 2px solid rgba(255, 255, 255, 0.4);
+	margin-bottom: 15px;
+}
+#senso_content{
+	width: 100%;
+	margin-top: 50px;
+	background:rgba(0, 0, 0, 0.4);
+}
+
+.layui-table tbody tr:hover, .layui-table thead tr, .layui-table-click, .layui-table-header, .layui-table-hover, .layui-table-mend, .layui-table-patch, .layui-table-tool, .layui-table-total, .layui-table-total tr, .layui-table[lay-even] tr:nth-child(even) {
+	background:rgb(0,0,0,.2);
+	font-size: 16px;
+}
+
+.layui-table {
+    width: 100%;
+    background:rgb(0,0,0,.4);
+    color: white;
+}
+
+.layui-table td, .layui-table th, .layui-table-col-set, .layui-table-fixed-r, .layui-table-grid-down, .layui-table-header, .layui-table-page, .layui-table-tips-main, .layui-table-tool, .layui-table-total, .layui-table-view, .layui-table[lay-skin=line], .layui-table[lay-skin=row] {
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgba(255,255,255,0.7);
+}
+
+.layui-laypage a, .layui-laypage span{
+	/*color: #333;下边的分页框字体颜色*/
+	color: white;
+    font-size: 12px;
+}
+
+.layui-laypage .layui-laypage-curr .layui-laypage-em {
+    position: absolute;
+    left: -1px;
+    top: -1px;
+    padding: 1px;
+    width: 100%;
+    height: 100%;
+    background-color: #ffc15e;
+    color: white;
+}
+.layui-laypage button, .layui-laypage input {
+    height: 30px;
+    line-height: 30px;
+    vertical-align: top;
+    background-color: rgb(0, 0, 0,0.6);
+    box-sizing: border-box;
+    border-radius: 2px;
+    color: white;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgba(255,255,255,0.7);
+}
+select{
+	background-color:rgba(0, 0, 0, 0.6);
+	color: white;
+	border-width: 1px;
+    border-style: solid;
+    border-color: rgba(255,255,255,0.7);
+}
+.layui-layer-dialog .layui-layer-content{
+	color:red;
+}

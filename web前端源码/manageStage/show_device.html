@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+		<link rel="stylesheet" href="css/show_device.css" />
+		<link rel="stylesheet" href="css/add_device.css" />
+		<script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
+		<script src="js/layer-v3.1.1/layer/layer.js"></script>
+		<script type="text/javascript" src="js/base.js" ></script>
+		<script type="text/javascript" src="js/show_device.js" ></script>
+	</head>
+
+	<body>
+		<div class="position-relative">
+			<div class="device_top">
+				<label>开发板管理</label>
+				<button id="device_add" title="添加">+</button>
+			</div>
+			<hr class="position-relative-hr" />
+			<div class="device-list">
+				<ul id="device_list">
+				</ul>
+			</div>
+		</div>
+		<div id="addDevice" >
+			<div class="addDevice-item">
+				<input type="text" id="addDevice-InputSerial" placeholder="请输入序列号" /></div>
+			<div class="addDevice-item">
+				<a id="addDevice_submit" href="javascript:;" >添加</a>
+			</div>
+		</div>
+		
+		<div id="testOrder" style="display: none;">
+			<div class="sensor_order">
+				<label>请输入传感器命令：</label>
+				<div class="input_items">
+					<input type="text" maxlength="2"/>--
+					<input type="text" maxlength="2"/>--
+					<input type="text" maxlength="2"/>--
+					<input type="text" maxlength="2"/>--
+					<input type="text" maxlength="2"/>--
+					<input type="text" maxlength="2"/>--
+					<input type="text" maxlength="2"/>--
+					<input type="text" maxlength="2"/>
+				</div>
+			</div>
+			<div class="submit_order">
+				<button type="button" id="debug">确定调试</button>
+			</div>
+			<div class="return_data">
+				<label>返回内容：</label>
+				<label id="tips"></label>
+			</div>
+		</div>
+	</body>
+
+</html>

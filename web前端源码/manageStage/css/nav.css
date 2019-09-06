@@ -1,0 +1,254 @@
+.min-width-lg {
+	min-width: 1012px;
+}
+
+body {
+	word-wrap: break-word;
+}
+
+body {
+	font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
+	font-size: 14px;
+}
+
+body {
+	margin: 0;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+html {
+	-ms-text-size-adjust: 100%;
+	-webkit-text-size-adjust: 100%;
+	font-family: sans-serif;
+	color: -internal-root-color;
+}
+
+body,
+div,
+header,
+a,
+details,
+summary,
+menu {
+	display: block;
+}
+
+
+.position-relative {
+	position: relative!important;
+}
+
+
+.Header {
+	background-color: #243949;
+	color: hsla(0, 0%, 100%, .7);
+	font-size: 14px;
+	line-height: 1.5;
+	padding: 16px;
+	z-index: 32;
+}
+.Header-item {
+	align-self: stretch;
+	margin-right: 16px;
+}
+.Header,.Header-item {
+	align-items: center;
+	display: flex;
+	flex-wrap: nowrap;
+}
+.Header-item--full {
+    flex: auto;
+}
+a {
+	background-color: transparent;
+	text-decoration: none;
+}
+
+a:-webkit-any-link {
+	color: -webkit-link;
+	cursor: pointer;
+}
+
+a:active,
+a:hover {
+	outline-width: 0;
+}
+
+.Header-link {
+	color: #fff;
+	font-weight: 600;
+	white-space: nowrap;
+}
+
+.Header-link:focus,
+.Header-link:hover,
+.Header-link:active {
+	color: hsla(0, 0%, 100%, .7);
+	text-decoration: none;
+}
+img {
+    border-style: none;
+}
+
+img:not(:root) {
+	overflow: hidden;
+}
+
+.octicon {
+	vertical-align: text-bottom;
+	display: inline-block;
+	fill: currentColor;
+	vertical-align: text-top;
+}
+
+.v-align-middle {
+	vertical-align: middle!important;
+}
+
+.d-flex {
+	display: flex!important;
+}
+
+.mr-3 {
+	margin-right: 20px!important;
+}
+.details-reset > summary {
+	list-style: none;
+}
+details summary {
+	cursor: pointer;
+	outline: none;
+}
+
+details summary::-webkit-details-marker {
+	display: none;
+}
+summary {
+	display: list-item;
+}
+.dropdown-caret {
+    border-bottom: 0 solid transparent;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top-style: solid;
+    border-top-width: 4px;
+    content: "";
+    display: inline-block;
+    height: 0;
+    vertical-align: middle;
+    width: 0;
+}
+.avatar {
+    border-radius: 3px;
+    display: inline-block;
+    line-height: 1;
+    overflow: hidden;
+    vertical-align: middle;
+}
+.dropdown-menu-sw {
+    left: auto;
+    right: 0;
+}
+.dropdown-menu {
+    background-clip: padding-box;
+    background-color: #fff;
+    border: 1px solid rgba(27,31,35,.15);
+    border-radius: 4px;
+    box-shadow: 0 3px 12px rgba(27,31,35,.15);
+    list-style: none;
+    margin-top: 2px;
+    padding: 5px 0px;
+    position: absolute;
+    top: 100%;
+    width: auto;
+    z-index: 100;
+}
+.dropdown-menu-sw:before {
+    left: auto;
+    right: 9px;
+    top: -16px;
+}
+.dropdown-menu:before {
+    border: 8px solid transparent;
+    border-bottom-color: rgba(27,31,35,.15);
+}
+.dropdown-menu-sw:after {
+    left: auto;
+    right: 10px;
+    top: -14px;
+}
+.dropdown-menu:after {
+    border: 7px solid transparent;
+    border-bottom-color: #fff;
+}
+.dropdown-menu:after, .dropdown-menu:before {
+    content: "";
+    display: inline-block;
+    position: absolute;
+}
+.dropdown-item {
+    color: #24292e;
+    display: block;
+    overflow: hidden;
+    padding: 5px 16px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.dropdown-item.zeroclipboard-is-hover, .dropdown-item:focus, .dropdown-item:hover {
+    background-color: #0366d6;
+    color: #fff;
+    outline: none;
+    text-decoration: none;
+}
+form {
+    display: block;
+    margin-top: 0em;
+}
+footer{
+	margin: 0;
+	text-align: center;
+	padding: 10px 0;
+	font-size: 12px;
+	color: #b8b8b8;
+	display: block;
+	background-image: linear-gradient(120deg, #487eb0, #ffc15e);
+	background-repeat: no-repeat;
+}
+footer a {
+	color: #b8b8b8;
+}
+
+
+.dropManager{
+	position: absolute;
+	background-color: #243949;
+	color: hsla(0, 0%, 100%, .7);
+}
+#dropDeviceManager{
+	top: 64px;
+	left: 125px;
+}
+#dropDataManager{
+	top: 64px;
+	left: 200px;
+}
+.dropManager a{
+	color: white;
+	padding: 10px 13px;
+}
+.dropManager a:hover{
+	color: #DFE2E5;
+	background-color: #2F4056;
+}
+#main_iframe{
+	width: 100%;
+    margin: 0;
+    border: 0;
+    padding: 0;
+	background-image: linear-gradient(120deg, #487eb0, #ffc15e);
+	background-repeat: no-repeat;
+	min-height: 570px;
+}

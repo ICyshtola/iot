@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" href="css/show_data.css" />
+		<script type="text/javascript" src="js/base.js"></script>
+		<script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
+		<script type="text/javascript" src="js/layer-v3.1.1/layer/layer.js" ></script>
+		<script src="js/echarts.min.js"></script>
+		<script type="text/javascript" src="js/show_history_data.js"></script>
+		<title></title>
+	</head>
+
+	<body>
+		<div class="content">
+			<div class="header">
+				<button>实时数据</button>
+			</div>
+			<div class="selections">
+				<div class="selection">
+					<div class="s_left">
+						<label>采集单元：</label>
+					</div>
+					<div class="unit_items">
+
+					</div>
+				</div>
+				<div class="selection">
+					<div class="s_left">
+						<label>设备：</label>
+					</div>
+					<div class="device_items">
+					</div>
+				</div>
+				<div class="selection">
+					<div class="s_left">
+						<label>时间段：</label>
+					</div>
+					<div class="device_items">
+						<div class="right_item">
+							<input id="history_start_time" type="datetime-local" value="2019-07-11T13:59:59" />&nbsp;-&nbsp;<input id="history_end_time"type="datetime-local" value="2019-07-11T14:59:59" />
+						<button id="search_button">查询</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="history_datashow">
+				<div id="history_chart">
+					<p>空空如也</p>
+				</div>
+			</div>
+
+		</div>
+	</body>
+
+</html>

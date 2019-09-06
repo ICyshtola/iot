@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" href="css/setting_changepasswd.css" />
+		<script type="text/javascript" src="js/base.js"></script>
+		<script type="text/javascript" src="js/md5.js" charset="utf-8"></script>
+		<script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
+		<title></title>
+	</head>
+
+	<body>
+		<div class="userinfo_detail">
+			<div class="profile-caption">
+				<div class="intro">
+					<h3 class="info-title prf-base">密码修改</h3>
+				</div>
+				<span class="ctr-btn-box">
+					<a class="btn btn-primary btn-info-save btn-baseinfo" href="javascript:void(0);">保存</a>
+				</span>
+				<hr />
+			</div>
+			<div class="info-box set-msg-box">
+				<dl class="passwd">
+					<dt>新的密码</dt>
+					<dd>
+						<input type="password" id="newpasswd" />
+						<label>密码长度要在8-16之间</label>
+					</dd>
+				</dl>
+				<dl class="passwd">
+					<dt>确认密码</dt>
+					<dd>
+						<input type="password" id="repeatpasswd" />
+						<label>两次密码不一致</label>
+					</dd>
+				</dl>
+				<dl>
+					<dt>验证码</dt>
+					<dd class="code">
+						<input type="text" maxlength="6" id="emailcode" />
+						<button class="btn btn-primary">发送验证码</button>
+					</dd>
+				</dl>
+				<span class="change_passwd">
+					<a class="btn btn-primary" href="javascript:void(0);">确认修改</a>
+				</span>
+			</div>
+		</div>
+		<script type="text/javascript">
+			
+			var time = 59;
+			var t_interval;
+			/**
+			 * 用于定时
+			 */
+			function myclock() {
+				console.log("123");
+				sendbtn.disabled=true;
+				if(time > 0){
+					sendbtn.innerText = time;
+					time--;
+				}
+				else if(time == 0){
+					sendbtn.disabled=false;
+					sendbtn.innerText="发送验证码";
+					window.clearInterval(t_interval);
+					time = 59;
+				}
+			}
+			/*获取新密码的输入框对象，对密码长度进行限定*/
+			var newpasswd = document.querySelector("#newpasswd");
+			newpasswd.onchange = function() {
+				var parr = this.parentNode;
+				var tip = parr.getElementsByTagName("label")[0];
+				if(this.value.length >= 8 && this.value.length <= 16) {
+					tip.style.visibility = "hidden";
+				} else {
+					tip.style.visibility = "visible";
+				}
+
+			}
+			/*获取确认密码的输入框对象，限定两次输入密码相等*/
+			var repeatpasswd = document.querySelector("#repeatpasswd");
+			repeatpasswd.onchange = function() {
+				var parr = this.parentNode;
+				var tip = parr.getElementsByTagName("label")[0];
+				if(this.value == newpasswd.value) {
+					tip.style.visibility = "hidden";
+				} else {
+					tip.style.visibility = "visible";
+				}
+
+			}
+			var codemod = document.getElementsByClassName("code")[0];
+			var sendbtn = codemod.getElementsByTagName("button")[0];
+			/*当按钮按下，向用户邮箱发送验证码*/
+			sendbtn.onclick = function() {
+				if(newpasswd.value.length < 8 || repeatpasswd.value.length < 8) {
+					alert("密码长度有误");
+				}
+				else if(newpasswd.value != repeatpasswd.value) {
+					alert("两次密码不一致");
+				}
+				else{
+					sendbtn.disabled=true;
+					var email = getCookie("current_email");
+					var info = {};
+					info['email'] = email; //这个应该是自己存起来的
+					info['type'] = "changePassword"; //这个不能是register了
+					jQuery.ajax({
+						type: "POST",
+						url: "http://192.168.100.32:8036/quest/code",
+						xhrFields: {
+							withCredentials: true
+						},
+						data: info,
+						success: function(data) {
+							alert("邮件已发送，注意查收");
+							t_interval = window.setInterval("myclock()",1000);
+						}
+					})
+				}
+				
+			}
+
+			var emailcode = codemod.getElementsByTagName("input")[0];
+			/*获取确认修改密码按钮*/
+			var change_passwd = document.querySelector(".change_passwd");
+			/*当按钮按下，向服务器发送请求，修改密码*/
+			change_passwd.onclick = function() {
+				if(newpasswd.value != repeatpasswd.value) {
+					alert("两次密码不一致");
+				} else {
+					if(emailcode.value.length != 6) {
+						alert("请填好验证码");
+					} else {
+						var token = getCookie("token");
+						var email = getCookie("current_email");
+						var new_passwd = MD5.createMD5String(newpasswd.value);
+						var info = {};
+						info['token'] = token; //这个是登录返回的，要保存，然后自己获取
+						info['email'] = email; //这个也是保存的数据
+						info['newPassword'] = new_passwd;
+						info['code'] = emailcode.value;
+						info['type'] = "changePassword";
+						jQuery.ajax({
+							type: "POST",
+							url: "http://192.168.100.32:8036/user/changePassword",
+							data: info,
+							dataType: "text",
+							xhrFields: {
+								withCredentials: true
+							},
+							success: function(data) {
+								var result = JSON.parse(data);
+								if(result.content == "success") {
+									alert("修改密码成功");
+								} else if(result.content == "fail") {
+									alert("修改密码失败");
+								} else if(result.content == "codeError") {
+									alert("修改密码失败:验证码错误");
+								} else if(result.content == "tokenError") {
+									alert("修改密码失败:token错误");
+								}
+								setCookie("token", result.token, 100);
+							}
+						})
+					}
+
+				}
+
+			}
+		</script>
+
+	</body>
+
+</html>

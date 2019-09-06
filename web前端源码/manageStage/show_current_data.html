@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" href="css/show_data.css" />
+		<script type="text/javascript" src="js/base.js"></script>
+		<script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
+		<script type="text/javascript" src="js/layer-v3.1.1/layer/layer.js"></script>
+		<script src="js/echarts.min.js"></script>
+		<title></title>
+	</head>
+
+	<body>
+		<div class="content">
+			<div class="header">
+				<button type="button">历史数据</button>
+			</div>
+			<div class="selections">
+				<div class="selection">
+					<div class="s_left">
+						<label>采集单元</label>
+					</div>
+					<div class="unit_items">
+
+					</div>
+				</div>
+				<div class="selection">
+					<div class="s_left">
+						<label>设备</label>
+					</div>
+					<div class="device_items">
+
+					</div>
+				</div>
+			</div>
+			<div class="current_datashow">
+				<div id="current_chart"></div>
+			</div>
+
+		</div>
+		<script type="text/javascript">
+			var checked_unit_name;
+			var checked_device_name;
+			var unit_data = new Array();
+			var device_data = new Array();
+			var all_device_data = new Array();
+
+			var show_data = new Array(); //获得全部传感器的数据，传感器有几个，show_data的长度就是几
+			var sensor_list = new Array(); //获取某设备的传感器，作为数据展示的legend项
+			var arr_series_obj = new Array(); //为各个数据项设置数据，作为series项
+			var x_time = new Array(); //获取时间数据，作为图标的x轴
+			var t_interval; //定时器返回的值
+			var myChart = echarts.init(document.getElementById('current_chart'));
+			var res = [];
+
+
+			var unitName = GetQueryString("unitName");
+			var deviceName = GetQueryString("deviceName");
+
+			unit_data = get_unit_data(unit_data);
+			all_device_data = get_device(all_device_data);
+			console.log(all_device_data);
+			if(unit_data.length > 0) {
+				add_unit_item(unit_data);
+			}
+
+			if(unitName == null && deviceName == null) {
+				if(all_device_data.length > 0) {
+					add_device_item(all_device_data);
+					set_unit_checked();
+					after_click_device_or_default();
+				}
+			} else {
+				if(all_device_data.length > 0) {
+					add_device_item(all_device_data);
+					checked_device_name = deviceName;
+					//寻找到deviceName的设备，并将其的按钮设为checked
+					find_device();
+					set_unit_checked();
+					after_click_device_or_default();
+				}
+			}
+
+			var btn = document.getElementsByClassName("header")[0].getElementsByTagName("button")[0];
+			btn.onclick = function() {
+				var path = "show_history_data.html" + "?unitName=" + checked_unit_name + "&deviceName=" + checked_device_name;
+				window.location.href = path;
+			}
+			//寻找到deviceName的设备，并将其的按钮设为checked (deviceName已赋值给checked_device_name)
+			function find_device() {
+				var getbox_device_items = document.getElementsByClassName("device_items")[0];
+				var device_items = getbox_device_items.getElementsByClassName("right_item");
+				[].forEach.call(device_items, function(item) {
+					var flag = false;
+					var device_label = item.getElementsByTagName("label")[0];
+					var device_radio = item.getElementsByTagName("input")[0];
+					if(device_label.innerText == checked_device_name) {
+						device_radio.checked = "checked";
+					}
+
+				})
+
+			}
+
+			//根据checked_device_name获取其采集单元，将其对应的采集单元的按钮设为checked
+			function set_unit_checked() {
+				//寻找checked_device_name的采集单元
+				var found_unit_name = null; //采集单元名
+				for(var i = 0; i < all_device_data.length; i++) {
+					if(all_device_data[i].deviceMac == checked_device_name) {
+						found_unit_name = all_device_data[i].deviceUnit;
+					}
+				}
+				if(found_unit_name == null) {
+					return "";
+				}
+				var getbox_unit_items = document.getElementsByClassName("unit_items")[0];
+				var unit_items = getbox_unit_items.getElementsByClassName("right_item");
+				[].forEach.call(unit_items, function(item) {
+					var unit_label = item.getElementsByTagName("label")[0];
+					var unit_radio = item.getElementsByTagName("input")[0];
+					if(unit_label.innerText == found_unit_name) //找到了采集单元，将其radio设为选中
+					{
+						unit_radio.checked = "checked";
+						checked_unit_name = unit_label.innerText;
+
+					}
+				})
+
+			}
+
+			//添加采集单元项，并为其添加点击事件
+			function add_unit_item(arr_unit_data) {
+				var getbox_unit_items = document.getElementsByClassName("unit_items")[0];
+				if(arr_unit_data.length > 0) {
+					for(var i = 0; i < arr_unit_data.length; i++) {
+						var new_unit_data = arr_unit_data[i];
+						var item = document.createElement("div");
+						item.className = "right_item";
+						var item_label = document.createElement("label");
+						item_label.innerText = new_unit_data.unitName;
+						var item_input = document.createElement("input");
+						item_input.type = "radio";
+						item_input.name = "unit_item_show";
+						item.appendChild(item_input);
+						item.appendChild(item_label);
+						getbox_unit_items.appendChild(item);
+						click_unit(item_input, item_label);
+					}
+				}
+
+			}
+
+			function click_unit(item_input, item_label) {
+				item_input.onclick = function() {
+					checked_unit_name = item_label.innerText;
+					after_click_unit_or_default();
+				}
+			}
+
+			function click_device(item_input, item_label) {
+				item_input.onclick = function() {
+					checked_device_name = item_label.innerText;
+					after_click_device_or_default();
+				}
+			}
+
+			//每次点击单元，都会调用的函数:根据checked_unit_name的值去寻找其对应的设备
+			function after_click_unit_or_default() {
+				reset_echarts();
+				//每一次点击都会获取设备信息
+				device_data = [];
+				device_data = get_device_by_unit_data(device_data, checked_unit_name);
+	
+				//遍历全部设备信息，如果不是该采集单元下的设备，就将其按钮设为不可点击,并且将当前选中的设备设为不选中
+				var getbox_device_items = document.getElementsByClassName("device_items")[0];
+				var device_items = getbox_device_items.getElementsByClassName("right_item");
+				[].forEach.call(device_items, function(item) {
+					var flag = false;
+					var device_label = item.getElementsByTagName("label")[0];
+					var device_radio = item.getElementsByTagName("input")[0];
+					if(device_radio.checked == true) {
+						device_radio.checked = false;
+					}
+					for(var i = 0; i < device_data.length; i++) {
+						if(device_label.innerText == device_data[i].deviceMac) {
+							flag = true;
+							break;
+						}
+					}
+					if(flag == false) {
+						device_radio.disabled = "disabled";
+					}
+					if(flag == true) {
+						device_radio.disabled = false;
+					}
+				})
+
+			}
+
+			function reset_echarts() {
+				window.clearInterval(t_interval);
+				myChart.clear();
+			}
+
+			//每次点击设备，都会调用的函数:获取某设备的数据信息
+			function after_click_device_or_default() {
+				//清空各个存放设备数据的全局变量
+				show_data = []; //获得全部传感器的数据，传感器有几个，show_data的长度就是几
+				sensor_list = []; //获取某设备的传感器，作为数据展示的legend项
+				arr_series_obj = []; //为各个数据项设置数据
+				x_time = []; //获取时间数据，作为图标的x轴
+				var dev_Interval;
+				dev_Interval = getDeviceInteralFromServer(dev_Interval); //获取数据间隔时间
+				var length = get_first_data(); //先获取数据，获得传感器个数，将对应的传感器放进相应的数据
+				if(length == null) {
+					myChart.clear();
+					return "";
+				}
+				for(var i = 0; i < length; i++) {
+					show_data[i] = new Array();
+				}
+				t_interval = window.setInterval("getdata()", dev_Interval * 1000); //每五秒获取一次信息
+
+				for(var i = 0; i < length; i++) //为各个数据项设置数据
+				{
+					var series_obj = {
+						name: sensor_list[i],
+						type: 'line',
+						data: show_data[i],
+						lineStyle: {
+							normal: {
+								width: 5,
+								type: 'solid',
+							}
+						},
+						symbolSize: 10, //设定实心点的大小
+						markPoint: {     //显示一定区域内的最大值和最小值                             
+							data: [{
+								type: 'max',
+								name: '最大值'
+							}, {
+								type: 'min',
+								name: '最小值'
+							}]                           
+						},
+						symbol: 'circle',
+					}
+					arr_series_obj.push(series_obj);
+				}
+				//初始化图表
+				var name = checked_device_name + "实时数据显示"; //设备名：checked_device_name
+				var gTop = parseInt(sensor_list.length / 8 + 0.5) * 40 + 100;
+				if(parseInt(sensor_list.length / 8 + 0.5) >= 1) {
+					document.getElementById('current_chart').parentNode.height += parseInt(sensor_list.length / 8 + 0.5) * 40;
+					iframeResize();
+				}
+				var option = {
+					textStyle: {
+						color: "#fff",
+						fontSize: 20,
+					},
+					title: {
+						text: name,
+						textStyle: {
+							color: "#fff",
+							fontSize: 30,
+						},
+						x: 'center',
+						y: 'top',
+						backgroundColor: 'rgba(0,0,0,0)',
+						borderColor: '#ccc',
+						borderWidth: 0,
+						padding: 20,
+					},
+					tooltip: {
+						trigger: 'axis',
+						axisPointer: {
+							animation: false
+						},
+						textStyle: {
+							color: "#fff",
+							fontSize: 20,
+						},
+						backgroundColor: '#000',
+					},
+					legend: {
+						data: sensor_list, //根据传感器名字和个数定义，是一个数组
+						textStyle: {
+							color: "#fff",
+							fontSize: 17,
+							fontWeight: 'bolder',
+						},
+						orient: 'horizontal',
+						x: 'right',
+						y: 'top',
+						backgroundColor: 'rgba(255,255,255,0)',
+						borderColor: '#fff',
+						borderWidth: 0,
+						padding: 90,
+						itemGap: 10,
+						itemWidth: 20,
+						itemHeight: 14,
+						width: 1000,
+					},
+					dataZoom: [{
+						id: 'dataZoomX',
+						type: 'slider',
+						xAxisIndex: [0],
+						filterMode: 'filter',
+						backgroundColor: 'rgba(255,255,255,0.5)', // 背景颜色
+						dataBackgroundColor: '#eee', // 数据背景颜色
+						fillerColor: 'rgba(144,197,237,0.5)', // 填充颜色
+						handleColor: 'rgba(70,130,180,0.8)', // 手柄颜色
+						padding: 15,
+						height: 40,
+						textStyle: {
+							color: "rgba(70,130,180,1)",
+						},
+					}],
+					grid: {
+						x: 80,
+						y: 60,
+						x2: 80,
+						y2: 60,
+						top: gTop,
+						bottom: '90px',
+						backgroundColor: 'rgba(255,255,255,1)',
+						borderWidth: 1,
+						borderColor: '#ccc'
+					},
+					xAxis: {
+						type: 'category',
+						name: '时间',
+						data: x_time, //res
+						axisLabel: {
+							textStyle: {
+								color: '#fff',
+								fontSize: 20,
+							}
+						},
+						axisLine: {
+							lineStyle: {
+								color: '#fff',
+							} // x轴坐标轴颜色
+						},
+
+						axisTick: {
+							lineStyle: {
+								color: '#fff',
+							} // x轴刻度的颜色
+						},
+						//设置网格线颜色
+						splitLine: {
+							show: true,
+							lineStyle: {
+								color: ['#fff'],
+								width: 1,
+								type: 'solid'
+							}　　
+						}
+					},
+					yAxis: {
+						type: 'value',
+						scale: true,
+						boundaryGap: [0, '100%'],
+						axisLabel: {
+							textStyle: {
+								color: '#fff',
+								fontSize: 20,
+							}
+						},
+						axisLine: {
+							lineStyle: {
+								color: '#fff',
+							} // x轴坐标轴颜色
+						},
+						axisTick: {
+							lineStyle: {
+								color: '#fff',
+							} // x轴刻度的颜色
+						},
+						//设置网格线颜色
+						splitLine: {
+							show: true,
+							lineStyle: {
+								color: ['#fff'],
+								width: 1,
+								type: 'solid'
+							}　　
+						}
+					},
+					series: arr_series_obj
+				};
+
+				myChart.setOption(option);
+
+			}
+
+			//添加设备项，并为其添加点击事件
+			function add_device_item(arr_device_data) {
+				var getbox_device_items = document.getElementsByClassName("device_items")[0];
+				if(arr_device_data.length > 0) {
+					for(var i = 0; i < arr_device_data.length; i++) {
+						var new_device_data = arr_device_data[i];
+						var item = document.createElement("div");
+						item.className = "right_item";
+						var item_label = document.createElement("label");
+						item_label.innerText = new_device_data.deviceMac;
+						var item_input = document.createElement("input");
+						item_input.type = "radio";
+						item_input.name = "device_item_show";
+						if(i == 0) {
+							item_input.checked = "checked";
+							checked_device_name = item_label.innerText;
+						}
+						item.appendChild(item_input);
+						item.appendChild(item_label);
+						getbox_device_items.appendChild(item);
+						click_device(item_input, item_label);
+
+					}
+
+				}
+
+			}
+
+			//获取所拥有的所有采集单元
+			function get_unit_data(unit_data) {
+				var info = {};
+				info['token'] = getCookie("token");
+				info['email'] = getCookie("current_email");
+				jQuery.ajax({
+					async: false,
+					type: "POST",
+					url: "http://192.168.100.32:8036/user/getUnitInfo",
+					data: info,
+					dataType: "text",
+					xhrFields: {
+						withCredentials: true
+					},
+					success: function(data) {
+						var result = JSON.parse(data);
+						if(result.msgType == "UserGetUnitInfo") {
+							if(result.message == "success") {
+								unit_data = JSON.parse(result.content);
+							} else if(result.message == "tokenError") {
+								alert("获取数据失败:token错误");
+							} else if(result.message == "noUnit") {
+								alert("你还没有采集单元，没有数据显示哦，赶紧去添加吧！！");
+							}
+						}
+						setCookie("token", result.token, 100);
+					}
+				})
+				return unit_data;
+
+			}
+			//获取全部设备
+			function get_device(all_device_data) {
+				var info = {};
+				info['token'] = getCookie("token");
+				info['email'] = getCookie("current_email");
+				jQuery.ajax({
+					async: false,
+					type: "POST",
+					url: "http://192.168.100.32:8036//user/getDeviceInfo",
+					data: info,
+					dataType: "text",
+					xhrFields: {
+						withCredentials: true
+					},
+					success: function(data) {
+						var result = JSON.parse(data);
+						if(result.msgType == "UserGetDeviceInfo") {
+							if(result.message == "success") {
+								all_device_data = JSON.parse(result.content);
+							} else if(result.message == "tokenError") {
+								alert("获取设备数据失败:token错误");
+							} else if(result.message == "noDevice") {
+								alert("您还还没有设备，没有数据显示哦，赶紧去添加吧！！");
+							}
+						}
+						setCookie("token", result.token, 100);
+					}
+				})
+				return all_device_data;
+			}
+
+			//根据采集单元获取某单元下所有的设备
+			function get_device_by_unit_data(device_data, unit_name) {
+				var info = {};
+				info['token'] = getCookie("token");
+				info['email'] = getCookie("current_email");
+				info['unit'] = unit_name;
+				jQuery.ajax({
+					async: false,
+					type: "POST",
+					url: "http://192.168.100.32:8036/user/getDevsByUnit",
+					data: info,
+					dataType: "text",
+					xhrFields: {
+						withCredentials: true
+					},
+					success: function(data) {
+						var result = JSON.parse(data);
+						if(result.msgType == "UserGetDevsByUnit") {
+							if(result.message == "success") {
+								device_data = JSON.parse(result.content);
+							} else if(result.message == "tokenError") {
+								alert("获取设备数据失败:token错误");
+							} else if(result.message == "noDevice") {
+								alert("该采集单元还没有设备，没有数据显示哦，赶紧去添加吧！！");
+							}
+						}
+						setCookie("token", result.token, 100);
+					}
+				})
+				return device_data;
+			}
+
+			function getDeviceInteralFromServer(dev_Interval) {
+				var info = {};
+				info['token'] = getCookie("token");
+				info['mac'] = checked_device_name;
+				info['email'] = getCookie("current_email");
+				console.log("send getDeviceInteralFromServer:" + info['token']);
+				console.log(info);
+				jQuery.ajax({
+					async: false,
+					type: "POST",
+					url: "http://192.168.100.32:8036/device/getInterval",
+					data: info,
+					dataType: "text",
+					xhrFields: {
+						withCredentials: true
+					},
+					success: function(data) {
+						var result = JSON.parse(data);
+						if(result["msgType"] == "DeviceGetInterval") {
+							if(result.message == "success") {
+								dev_Interval = result["content"];
+							} else {
+								console.log("tokenError");
+								alert("身份验证失败！"); //为了测试
+							}
+						}
+						setCookie("token", result["token"], 100);
+					},
+					error: function() {
+						console.log("error");
+					}
+				})
+	
+				return dev_Interval;
+			}
+
+			function get_current_data(current_data, device_name) {
+				var info = {};
+				info['token'] = getCookie("token");
+				info['mac'] = device_name;
+				info['email'] = getCookie("current_email");
+				jQuery.ajax({
+					async: false,
+					type: "POST",
+					url: "http://192.168.100.32:8036/user/getRealTimeData",
+					data: info,
+					dataType: "text",
+					xhrFields: {
+						withCredentials: true
+					},
+					success: function(data) {
+						var result = JSON.parse(data);
+						if(result.msgType == "UserGetRealTimeData") {
+							if(result.message == "success") {
+								current_data = JSON.parse(result.content);
+								console.log(current_data.record_time);
+							} else if(result.message == "tokenError") {
+								alert("获取某设备实时数据失败:token错误");
+							} else if(result.message == "noData") {
+								alert("该设备没有实时数据");
+								current_data = null;
+							}
+						}
+						setCookie("token", result.token, 100);
+					}
+				})
+				return current_data;
+			}
+
+			function get_first_data() {
+				var current_data = {};
+				current_data = get_current_data(current_data, checked_device_name);
+				if(current_data == null) {
+					return null;
+				}
+				var time = current_data.record_time;
+				time = time.split(" ")[1];
+				x_time.push(time);
+				var data_list = current_data.data; //这是一个json字符串 列表，有几个传感器，列表就有几项
+				var arr_data_list = JSON.parse(data_list);//取到了第一个传感器的值
+				console.log(arr_data_list[0].data); //取到了第一个传感器的值
+				console.log(show_data);
+				for(var i = 0; i < arr_data_list.length; i++) {
+					sensor_list.push(arr_data_list[i].sensorName + "(" + arr_data_list[i].sensorUnit + ")");
+				}
+			//	now = new Date();
+			//	res.push(now.toLocaleTimeString().replace(/^\D*/, ''));
+				return arr_data_list.length;
+			}
+
+			function getdata() {
+				var current_data = {};
+				current_data = get_current_data(current_data, checked_device_name);
+				var time = current_data.record_time;
+				time = time.split(" ")[1];
+				x_time.push(time);
+				var data_list = current_data.data; //这是一个json字符串 列表，有几个传感器，列表就有几项
+				var arr_data_list = JSON.parse(data_list);
+				for(var i = 0; i < arr_data_list.length; i++) {
+					if(arr_data_list[i].data > 1e100) {
+						layer.msg("数据异常！！", {
+							time: 2000
+						});
+					}
+					show_data[i].push(arr_data_list[i].data);
+				}
+			//	var now = new Date();
+			//	res.push(now.toLocaleTimeString().replace(/^\D*/, ''));
+				myChart.setOption({
+					xAxis: {
+						type: 'category',
+						name: '时间',
+						data: x_time, //res
+					},
+					yAxis: {
+						type: 'value',
+						scale: true,
+						boundaryGap: [0, '100%']
+					},
+					series: arr_series_obj
+				});
+				console.log(show_data);
+			}
+			iframeResize();
+		</script>
+	</body>
+
+</html>

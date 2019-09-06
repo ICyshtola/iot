@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>通用农业物联网-主页-单元管理</title>
+		<link rel="stylesheet" href="css/add_unit.css" />
+		<script type="text/javascript" src="js/base.js"></script>
+		<script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
+		<script type="text/javascript" src="js/add_unit.js"></script>
+	</head>
+
+	<body>
+		<div class="root">
+			<div class="main">
+				<form class="new-unit-form">
+					<h2>添加采集单元</h2>
+					<hr />
+					<div class="new-unit-fields">
+						<div class="unit-item unit-item-name">
+							<label>单元名称：</label><label class="unit-item-error"></label>
+							<input type="text" />
+						</div>
+						<div class="unit-item unit-item-lengthWidth">
+							<label>长度：</label><input type="number" placeholder="0" min="0" />&nbsp;m&nbsp;&nbsp;&nbsp;
+							<label>宽度：</label><input type="number" placeholder="0" min="0" />&nbsp;m
+							<label class="unit-item-error"></label>
+						</div>
+						<div class="unit-item unit-item-scene">
+							<label>应用场景：</label>
+							<label class="unit-item-error"></label><br>
+							<textarea></textarea>
+						</div>
+						<hr />
+						<div class="unit-item unit-item-name">
+							<button disabled="">添加</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+
+	</body>
+
+</html>

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="js/layui-v2.5.4/layui/css/layui.css" />
+		<link rel="stylesheet" href="css/info_device.css" />
+		<script type="text/javascript" src="js/base.js"></script>
+		<script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
+		<script type="text/javascript" src="js/info_device.js"></script>
+		<script type="text/javascript" src="js/layui-v2.5.4/layui/layui.js"></script>
+	</head>
+
+	<body>
+		<div class="position-relative">
+
+			<div class="device_top">
+				<label id="device_name">F4:5E:AB:57:F0:FF</label>
+				<hr class="position-relative-hr" />
+			</div>
+			<div class="device_info">
+				<div class="device_info_content">
+					<label class="device_info_key">基本信息</label>
+					<button class="device_info_submit">编辑</button>
+					<button class="device_info_edit" style="display: none;">提交</button>
+					<div class="device_info_list">
+						<label class="device_info_item">&nbsp;&nbsp;所&nbsp;属&nbsp;单&nbsp;元&nbsp;&nbsp;：</label>
+						<select id="device_select_unit" disabled="">
+							<option>无</option>
+						</select>
+					</div>
+					<div class="device_info_list">
+						<label class="device_info_item">数据采集频率：</label>
+						<input type="number" value="3" readonly="" /><label class="device_info_item">&nbsp;秒/条</label>
+					</div>
+				</div>
+
+				<div class="device_info_content device_sensor_content">
+					<label class="device_info_key">传感器列表</label>
+					<button id="device_sensor_add">添加</button>
+					<!--列表-->
+					<div class="device_info_table device_sensors_table">
+						<table class="layui-hide" id="device_sensors_table" lay-filter="device_sensors_table"></table>
+					</div>
+					<!--列表行操作按钮列-->
+					<div id="device_sensors_table_barDemo" style="display: none;">
+						<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="monitor">监控</a>
+						<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+					</div>
+					<!--添加弹窗-->
+					<div id="deviceAddSensor" style="display: none;">
+						<div class="deviceAddSensor-item">
+							<select name="sensorName" id="deviceAddSensor-InputSensor">
+							</select>
+						</div>
+						<div class="deviceAddSensor-item">
+							<a id="deviceAddSensor_submit" href="javascript:;">添加</a>
+						</div>
+					</div>
+					<!--监控弹窗-->
+					<div id="deviceMonitorSensor" style="display: none;">
+						<div class="deviceMonitorSensor-item">
+							<label>小传感器：</label>
+							<select name="miniSensorName" id="deviceMonitorSensor-SelectMiniSensor">
+							</select>
+						</div>
+						<div class="deviceMonitorSensor-item">
+							<label>最大值数值：</label>
+							<input class="deviceMonitorSensor_max" id="deviceMonitorSensor_max" type="number" placeholder="0" /><button id="deviceMonitorSensor_addMaxOrder">添加最值命令</button>
+							<ul id="deviceMonitorSensor_addMaxOrder_list">
+								<!--<li>
+									<label>最大值命令：</label>
+									<input class="deviceMonitorSensor_MaxOrder" type="text" placeholder="[00,00,00,00,00,00,00,00]" />
+								</li>-->
+							</ul>
+						</div>
+						<div class="deviceMonitorSensor-item">
+							<label>最小值数值：</label>
+							<input class="deviceMonitorSensor_min" id="deviceMonitorSensor_min" type="number" placeholder="0" /><button id="deviceMonitorSensor_addMinOrder">添加最值命令</button>
+							<ul id="deviceMonitorSensor_addMinOrder_list">
+								<!--<li>
+									<label>最小值命令：</label>
+									<input class="deviceMonitorSensor_MinOrder" type="text" placeholder="[00,00,00,00,00,00,00,00]" />
+								</li>-->
+							</ul>
+						</div>
+						<div class="deviceMonitorSensor-item">
+							<label>选择控制的强电设备：</label><button id="deviceMonitorSensor_addEquipment">+</button>
+							<ul id="deviceMonitorSensor_addEquipment_list">
+								<!--<li>
+									<select name="equipmentName" class="deviceMonitorSensor_selectEquipment">
+									</select>
+								</li>-->
+							</ul>
+						</div>
+						<div class="deviceAddEquipment-item-remind">
+							<label>注意：<br>最值必选一个，强电设备必选，此次监控才有效</label>
+							<label>命令格式：(符号是英文字符)</label>
+							<label>[xx,xx,xx,xx,xx,xx,xx,xx](x:0-9/a-f/A-F)</label>
+						</div>
+						<div class="deviceMonitorSensor-item">
+							<a id="deviceMonitorSensor_submit" href="javascript:;">监控</a>
+						</div>
+					</div>
+					<!--测试弹窗-->
+					<div id="deviceSetSensor" style="display: none;">
+						<div class="deviceSetSensor-item">
+							<select name="sensorName" id="deviceSetSensor-InputSensor">
+							</select>
+						</div>
+						<div class="deviceSetSensor-item">
+							<a id="deviceSetSensor_submit" href="javascript:;">测试</a>
+						</div>
+					</div>
+				</div>
+
+				<div class="device_info_content device_equipment_content">
+					<label class="device_info_key">强电设备列表</label>
+					<button id="device_equipment_add">添加</button>
+					<!--列表-->
+					<div class="device_info_table device_equipments_table">
+						<table class="layui-hide" id="device_equipments_table" lay-filter="device_equipments_table"></table>
+					</div>
+					<!--列表开关列-->
+					<script type="text/html" id="device_equipments_table_switchTpl">
+						<input type="checkbox" name="status" lay-skin="switch" lay-text="on|off" lay-filter="statusDemo" {{ d.equipmentStatus=='开' ? 'checked' : '' }}>
+					</script>
+					<!--列表行操作按钮列-->
+					<div id="device_equipments_table_barDemo" style="display: none;">
+						<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+					</div>
+					<!--弹窗-->
+					<div id="deviceAddEquipment" style="display: none;">
+						<div class="deviceAddEquipment-item">
+							<label>名称：</label>
+							<input id="deviceAddEquipment_name" type="text" placeholder="请输入强电设备名称" />
+						</div>
+						<div class="deviceAddEquipment-item">
+							<label>所在继电器的线路：</label>
+							<input id="deviceAddEquipment_relay" type="number" placeholder="1-16" />
+						</div>
+
+						<div class="deviceAddEquipment-item">
+							<label>开启命令：</label>
+							<input class="deviceAddEquipment_Order" id="deviceAddEquipment_openOrder" type="text" placeholder="[00,00,00,00,00,00,00,00]" />
+						</div>
+						<div class="deviceAddEquipment-item">
+							<label>关闭命令：</label>
+							<input class="deviceAddEquipment_Order" id="deviceAddEquipment_closeOrder" type="text" placeholder="[00,00,00,00,00,00,00,00]" />
+						</div>
+						<div class="deviceAddEquipment-item">
+							<label>查询命令：</label>
+							<input class="deviceAddEquipment_Order" id="deviceAddEquipment_queryOrder" type="text" placeholder="[00,00,00,00,00,00,00,00]" />
+						</div>
+						<div class="deviceAddEquipment-item-remind">
+							<label>命令格式：(符号是英文字符)</label>
+							<label>[xx,xx,xx,xx,xx,xx,xx,xx](x:0-9/a-f/A-F)</label>
+						</div>
+						<div class="deviceAddEquipment-item">
+							<a id="deviceAddEquipment_submit" href="javascript:;">添加</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+
+</html>

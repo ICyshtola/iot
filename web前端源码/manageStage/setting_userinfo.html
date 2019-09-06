@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" href="css/setting_userinfo.css" />
+		<script type="text/javascript" src="js/base.js" ></script>
+		<script type="text/javascript" src="js/jquery-1.8.2.min.js" ></script>
+		<script type="text/javascript">		
+			
+			window.onload = function(){
+				/*该函数已被放到base.js里*/
+				var userName = GetQueryString("userName");
+				var userEmail = GetQueryString("userEmail");
+				var userRegistertime = GetQueryString("userRegistertime");
+				
+				/*给三个dd标签赋初值*/
+				var register_time = document.querySelector("#registertime");
+				var user_name = document.querySelector("#username");
+				var user_email = document.querySelector("#useremail");
+				register_time.innerText = userRegistertime;
+				user_name.innerText = userName;
+				user_email.innerText = userEmail;
+				
+				/*获取三个按钮*/
+				var nav_list = document.getElementsByClassName("ctr-btn-box")[0];
+				var edit = nav_list.getElementsByTagName("a")[0];
+				var cancel = nav_list.getElementsByTagName("a")[1];
+				var save = nav_list.getElementsByTagName("a")[2];
+				var username_pre = username.innerText;
+				
+				edit.onclick = function(){
+					edit.style.display="none";
+					cancel.style.display="inline-block";
+					save.style.display="inline-block";
+					user_name.contentEditable="true";
+					user_name.style.border="1px solid green";
+					user_name.innerText = " ";
+				}
+				cancel.onclick = function(){
+					cancel.style.display="none";
+					save.style.display="none";
+					edit.style.display="inline-block";
+					user_name.contentEditable="false";
+					user_name.innerText = username_pre;
+					user_name.style.border="none";
+					
+				}
+			
+				save.onclick = function(){
+					cancel.style.display="none";
+					save.style.display="none";
+					edit.style.display="inline-block";
+					user_name.contentEditable="false";
+					user_name.style.border="none";
+					//提交数据。
+					if(user_name.innerText.length == 0){
+						alert("用户名不能为空");
+						user_name.innerText = username_pre;
+						return " ";
+					}
+					if(username_pre != user_name.innerText){
+						var info={};
+						var token = getCookie("token");
+						var email = getCookie("current_email");
+						info['token'] = token;
+						info['email'] = email; 
+						info['newUsername'] = user_name.innerText;
+						jQuery.ajax({
+							type: "POST",
+							url: "http://192.168.100.32:8036/user/changeUsername",
+							data: info,
+							dataType: "text",
+							xhrFields: {
+								withCredentials: true
+							},
+							success:function(data) {
+								var result = JSON.parse(data);
+								if(result.content == "success")	{
+									alert("修改用户名成功");
+									parent.parent.document.getElementsByClassName("dropdown-item-user")[0].innerHTML = user_name.innerText;
+									parent.document.getElementsByTagName("label")[0].innerHTML = user_name.innerText;
+								}
+								else if(result.content == "tokenError"){
+									alert("修改用户名失败：token错误");
+									user_name.innerText = username_pre;
+								}
+								setCookie("token",result.token,100);
+							}
+						})
+						
+						
+					}	
+				}
+				iframeResize();
+			}
+		</script>
+		<title></title>
+	</head>
+	<body>
+		<div class="userinfo_detail">
+			<div class="profile-caption">
+				<div class="intro">
+					<h3 class="info-title prf-base">基本信息</h3>
+				</div>
+				<span class="ctr-btn-box">
+					<a class="btn btn-info-edit btn-primary" href="javascript:void(0);">编辑</a>
+					<a class="btn btn-default btn-info-cancel" href="javascript:void(0);">取消</a>
+					<a class="btn btn-primary btn-info-save btn-baseinfo" href="javascript:void(0);">保存</a>
+				</span>
+				<hr />
+			</div>
+			<div class="info-box set-msg-box" >
+				<dl>
+					<dt>注册时间</dt>
+					<dd id="registertime"></dd>
+				</dl>
+				<dl>
+					<dt>用户昵称</dt>
+					<dd id="username"></dd>
+				</dl>
+				<dl>
+					<dt>用户邮箱</dt>
+					<dd id="useremail"></dd>
+				</dl>
+				
+			</div>
+							
+		</div>
+		
+	</body>
+</html>

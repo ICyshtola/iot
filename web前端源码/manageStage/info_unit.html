@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="css/info_unit.css" />
+		<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+		<script type="text/javascript" src="js/base.js"></script>
+		<script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
+		<script src="js/layer-v3.1.1/layer/layer.js"></script>
+		<script type="text/javascript" src="js/info_unit.js"></script>
+	</head>
+
+	<body>
+		<div class="position-relative">
+
+			<div class="unit_top">
+				<label id="unit_name">采集单元名称</label>
+				<hr class="position-relative-hr" />
+			</div>
+
+			<div class="unit_info">
+				<div class="unit_info_content">
+					<label class="unit_info_key">基本信息</label>
+					<button class="unit_info_edit">编辑</button>
+					<button id="submit_info" style="display: none;">提交</button>
+					<div class="unit_info_list">
+						<div class="unit_info_item">
+							<label>区域长度：</label>
+							<input type="number" disabled="" placeholder="0" />&nbsp;m
+							<label class="unit_info_item_error"></label>
+						</div>
+						<div class="unit_info_item">
+							<label>区域宽度：</label>
+							<input type="number" disabled="" placeholder="0" />&nbsp;m
+							<label class="unit_info_item_error"></label>
+						</div>
+						<div class="unit_info_item">
+							<label>应用场景：</label>
+							<label class="unit_info_item_error"></label><br>
+							<textarea type="number" disabled="" placeholder="无"></textarea>
+						</div>
+					</div>
+				</div>
+				<div class="unit_info_content unit_device_content">
+					<label class="unit_info_key">&nbsp;开&nbsp;发&nbsp;板&nbsp;</label>
+					<!--<img class="unit_info_edit" src="img/edit.png" style="width: 20px;height: 20px;"></img>-->
+					<button class="unit_info_edit">编辑</button>
+					<div class="unit_device_list">
+						<ul id="unit_device_content_list">
+							<!--<li class="device-list-item">
+								<div class="device_item">
+									<label>
+									<a href="info_device.html" class="device_item_name">F4:5E:AB:57:F0:FF</a>
+									</label>
+									<img class="device_item_delete" src="img/delete.png" style="display: none;"></img>
+									<img class="device_item_info" src="img/switch.png"></img>
+									<img class="device_item_showData" src="img/data.png"></img>
+								</div>
+							</li>-->
+						</ul>
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+	</body>
+
+</html>
